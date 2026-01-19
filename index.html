@@ -248,8 +248,8 @@
         }
 
         #teacher-video.dimmed {
-            opacity: 0.5;
-            filter: brightness(0.4) blur(2px);
+            opacity: 0.6;
+            filter: brightness(0.6) blur(1px);
         }
 
         .video-overlay-start {
@@ -267,6 +267,8 @@
             text-align: center;
             cursor: pointer;
             transition: all 0.5s ease;
+            background: rgba(26, 54, 93, 0.3); /* Slightly tinted background to match site theme */
+            backdrop-filter: blur(2px); /* Gentle blur to make text readable but keep video visible */
         }
 
         .video-overlay-start.hidden {
@@ -322,28 +324,6 @@
             visibility: visible;
         }
 
-        .video-overlay-start {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(26, 54, 93, 0.4);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            z-index: 15;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .video-overlay-start.hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
 
 
 
@@ -362,23 +342,7 @@
 
         /* Улучшенные стили для видео */
         .video-placeholder {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            background: linear-gradient(rgba(26, 54, 93, 0.9), rgba(26, 54, 93, 0.9));
-            text-align: center;
-            padding: 2rem;
-            z-index: 3;
-            transition: opacity 0.5s ease;
-            opacity: 1;
-            pointer-events: all;
+            display: none; /* Hide the loading placeholder to show video immediately */
         }
 
         .video-placeholder.hidden {
@@ -744,7 +708,7 @@
                     </div>
 
                     <!-- Video Element -->
-                    <video id="teacher-video" class="dimmed" playsinline autoplay muted loop preload="auto" style="width: 100%; height: 100%; object-fit: cover;" poster="https://images.unsplash.com/photo-1523050335392-9bef867a0578?auto=format&fit=crop&q=80&w=1000">
+                    <video id="teacher-video" class="dimmed" playsinline autoplay muted loop preload="auto" style="width: 100%; height: 100%; object-fit: cover;">
                         <source src="./teacher_video.mp4" type="video/mp4">
                         Ваш браузер не поддерживает видео.
                     </video>
@@ -786,22 +750,6 @@
                         </div>
                     </div>
 
-                    <!-- Backup UI / Loading State -->
-                    <div class="video-placeholder" id="video-ui">
-                        <div id="placeholder-content">
-                    <div class="loading-spinner" id="video-spinner"></div>
-                    <h3 id="video-status-title">Meet Your Teacher</h3>
-                    <p id="video-status-text">Видео-презентация загружается...</p>
-                    <div style="display: flex; gap: 10px; justify-content: center; margin-top: 1rem;">
-                        <button class="btn btn-primary" onclick="location.reload()">
-                            <span>Обновить страницу</span>
-                        </button>
-                        <button class="btn btn-outline" onclick="document.getElementById('teacher-video').load(); this.style.display='none';" style="border-color: white; color: white;">
-                            <span>Повторить загрузку</span>
-                        </button>
-                    </div>
-                </div>
-                    </div>
                 </div>
             </div>
         </section>
@@ -952,10 +900,6 @@
             // Video Elements
             const teacherVideo = document.getElementById('teacher-video');
             const videoEndOverlay = document.getElementById('video-end-overlay');
-            const videoUI = document.getElementById('video-ui');
-            const videoSpinner = document.getElementById('video-spinner');
-            const videoStatusTitle = document.getElementById('video-status-title');
-            const videoEndOverlay = document.getElementById('video-end-overlay');
             const videoStartOverlay = document.getElementById('video-start-overlay');
             const replayBtn = document.getElementById('replay-btn');
             const muteToggle = document.getElementById('mute-toggle');
@@ -964,8 +908,6 @@
 
             // Video Logic
             if (teacherVideo) {
-                const videoSource = teacherVideo.querySelector('source');
-
                 // Start Overlay Logic
                 if (videoStartOverlay) {
                     videoStartOverlay.addEventListener('click', function() {
@@ -1017,97 +959,6 @@
                     }
                 });
 
-                // Auto-hide hint after 5 seconds
-                /* 
-                setTimeout(() => {
-                    if (muteHint) muteHint.style.opacity = '0';
-                }, 5000);
-                */
-
-                console.log("Video Debug Info:");
-                console.log("- Page URL:", window.location.href);
-                if (videoSource) {
-                    console.log("- Video Source URL:", videoSource.src);
-                    console.log("- Video Source Relative:", videoSource.getAttribute('src'));
-                }
-
-                const handleVideoError = (e) => {
-                    console.error("Video error detail:", e);
-                    console.log("Video Network State:", teacherVideo.networkState);
-                    console.log("Video Ready State:", teacherVideo.readyState);
-                    console.log("Video Current Src:", teacherVideo.currentSrc);
-                    
-                    if (videoUI) {
-                        videoUI.classList.remove('hidden');
-                        if (videoSpinner) videoSpinner.style.display = 'none';
-                        videoUI.style.background = 'rgba(26, 54, 93, 0.95)';
-                        if (videoStatusTitle) videoStatusTitle.innerText = 'Проблема с видео-файлом';
-                        if (videoStatusText) videoStatusText.innerHTML = `
-                            <div style="margin-bottom: 1.5rem;">
-                                <p style="margin-bottom: 1rem;">На сервере видео может не загружаться по нескольким причинам:</p>
-                                <ol style="text-align: left; display: inline-block; margin-bottom: 1rem; font-size: 0.9rem;">
-                                    <li><strong>Регистр имени:</strong> Файл должен называться точно <code style="color: #ffd700">teacher_video.mp4</code> (все строчными буквами). На серверах Linux это важно.</li>
-                                    <li><strong>Путь к файлу:</strong> Проверьте, что видео лежит в той же папке, что и этот HTML файл.</li>
-                                    <li><strong>Загрузка:</strong> Возможно, файл еще не до конца загрузился на сервер (видео весит ~2МБ).</li>
-                                </ol>
-                                <p style="font-size: 0.8rem; opacity: 0.8; margin-top: 10px;">URL: ${teacherVideo.currentSrc || 'не определен'}</p>
-                            </div>
-                        `;
-                    }
-                };
-
-                // Remove the proactive fetch check as it often fails on servers due to CORS or HEAD method restrictions
-                // Rely on native video events instead
-
-                // Listen for errors on the source element
-                if (videoSource) {
-                    videoSource.addEventListener('error', (e) => {
-                        console.warn("Source element reported error");
-                        handleVideoError(e);
-                    });
-                }
-
-                // Also listen on the video element itself
-                teacherVideo.addEventListener('error', handleVideoError);
-
-                // Check network state periodically - increased delay for server environments
-                const checkInterval = setInterval(() => {
-                    if (teacherVideo.networkState === 3) { // NETWORK_NO_SOURCE
-                        console.warn("Network state: NO_SOURCE. Retrying...");
-                        teacherVideo.load(); // Try to reload
-                        
-                        // If still no source after another attempt
-                        setTimeout(() => {
-                            if (teacherVideo.networkState === 3) {
-                                handleVideoError({ type: 'network_no_source' });
-                                clearInterval(checkInterval);
-                            }
-                        }, 3000);
-                    }
-                }, 5000);
-
-                // When video is ready to play
-                teacherVideo.addEventListener('canplaythrough', function() {
-                    console.log("Video is ready");
-                    if (videoUI) videoUI.classList.add('hidden');
-                    // We don't auto-play here anymore to respect user interaction for sound
-                    clearInterval(checkInterval);
-                });
-
-                // Check if video is already loaded (from cache)
-                if (teacherVideo.readyState >= 3) {
-                    if (videoUI) videoUI.classList.add('hidden');
-                }
-                
-                // Set a timeout to show error if video takes too long (e.g., 10 seconds)
-                setTimeout(() => {
-                    if (teacherVideo.readyState < 3 && !videoUI.classList.contains('hidden')) {
-                         if (videoSpinner) videoSpinner.style.display = 'none';
-                         if (videoStatusTitle) videoStatusTitle.innerText = 'Загрузка затянулась';
-                         if (videoStatusText) videoStatusText.innerText = 'Возможно, файл видео отсутствует или поврежден.';
-                    }
-                }, 10000);
-
                 // Video Ended logic
                 teacherVideo.addEventListener('ended', function() {
                     console.log("Video ended");
@@ -1115,7 +966,6 @@
                     if (muteHint) muteHint.style.display = 'none';
                     if (videoEndOverlay) {
                         videoEndOverlay.classList.add('active');
-                        // Optional: Slight zoom in effect for the end card
                         const card = videoEndOverlay.querySelector('.end-card-content');
                         if (card) {
                             card.style.transform = 'scale(1)';
