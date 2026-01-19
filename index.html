@@ -674,8 +674,8 @@
                     </div>
 
                     <!-- Video Element -->
-                    <video id="teacher-video" playsinline preload="auto" style="width: 100%; height: 100%; object-fit: cover;" poster="https://images.unsplash.com/photo-1523050335392-9bef867a0578?auto=format&fit=crop&q=80&w=1000">
-                        <source src="teacher_video.mp4" type="video/mp4">
+                    <video id="teacher-video" playsinline autoplay muted preload="auto" style="width: 100%; height: 100%; object-fit: cover;" poster="https://images.unsplash.com/photo-1523050335392-9bef867a0578?auto=format&fit=crop&q=80&w=1000">
+                        <source src="./teacher_video.mp4" type="video/mp4">
                         Ваш браузер не поддерживает видео.
                     </video>
 
@@ -708,13 +708,18 @@
                     <!-- Backup UI / Loading State -->
                     <div class="video-placeholder" id="video-ui">
                         <div id="placeholder-content">
-                            <div class="loading-spinner" id="video-spinner"></div>
-                            <h3 id="video-status-title">Meet Your Teacher</h3>
-                            <p id="video-status-text">Видео-презентация загружается...</p>
-                            <button class="btn btn-primary" onclick="location.reload()" style="margin-top: 1rem;">
-                                <span>Обновить страницу</span>
-                            </button>
-                        </div>
+                    <div class="loading-spinner" id="video-spinner"></div>
+                    <h3 id="video-status-title">Meet Your Teacher</h3>
+                    <p id="video-status-text">Видео-презентация загружается...</p>
+                    <div style="display: flex; gap: 10px; justify-content: center; margin-top: 1rem;">
+                        <button class="btn btn-primary" onclick="location.reload()">
+                            <span>Обновить страницу</span>
+                        </button>
+                        <button class="btn btn-outline" onclick="document.getElementById('teacher-video').load(); this.style.display='none';" style="border-color: white; color: white;">
+                            <span>Повторить загрузку</span>
+                        </button>
+                    </div>
+                </div>
                     </div>
                 </div>
             </div>
@@ -877,6 +882,13 @@
             if (teacherVideo) {
                 const videoSource = teacherVideo.querySelector('source');
 
+                console.log("Video Debug Info:");
+                console.log("- Page URL:", window.location.href);
+                if (videoSource) {
+                    console.log("- Video Source URL:", videoSource.src);
+                    console.log("- Video Source Relative:", videoSource.getAttribute('src'));
+                }
+
                 // Initial Play Logic (to ensure sound)
                 if (videoStartOverlay) {
                     videoStartOverlay.addEventListener('click', function() {
@@ -886,50 +898,60 @@
                     });
                 }
 
-                const handleVideoError = () => {
-                    console.error("Video failed to load.");
+                const handleVideoError = (e) => {
+                    console.error("Video error detail:", e);
+                    console.log("Video Network State:", teacherVideo.networkState);
+                    console.log("Video Ready State:", teacherVideo.readyState);
+                    console.log("Video Current Src:", teacherVideo.currentSrc);
+                    
                     if (videoUI) {
                         videoUI.classList.remove('hidden');
                         if (videoSpinner) videoSpinner.style.display = 'none';
                         videoUI.style.background = 'rgba(26, 54, 93, 0.95)';
-                        if (videoStatusTitle) videoStatusTitle.innerText = 'Файл видео не найден';
+                        if (videoStatusTitle) videoStatusTitle.innerText = 'Проблема с видео-файлом';
                         if (videoStatusText) videoStatusText.innerHTML = `
                             <div style="margin-bottom: 1.5rem;">
-                                <p style="margin-bottom: 1rem;">Для работы презентации необходимо:</p>
-                                <ol style="text-align: left; display: inline-block; margin-bottom: 1rem;">
-                                    <li>Найти видео-файл на вашем компьютере</li>
-                                    <li>Переименовать его в <strong>teacher_video.mp4</strong></li>
-                                    <li>Положить его в папку проекта: <br><code style="background: rgba(0,0,0,0.3); padding: 2px 5px; border-radius: 4px; font-size: 0.8rem;">mini app/</code></li>
+                                <p style="margin-bottom: 1rem;">На сервере видео может не загружаться по нескольким причинам:</p>
+                                <ol style="text-align: left; display: inline-block; margin-bottom: 1rem; font-size: 0.9rem;">
+                                    <li><strong>Регистр имени:</strong> Файл должен называться точно <code style="color: #ffd700">teacher_video.mp4</code> (все строчными буквами). На серверах Linux это важно.</li>
+                                    <li><strong>Путь к файлу:</strong> Проверьте, что видео лежит в той же папке, что и этот HTML файл.</li>
+                                    <li><strong>Загрузка:</strong> Возможно, файл еще не до конца загрузился на сервер (видео весит ~2МБ).</li>
                                 </ol>
+                                <p style="font-size: 0.8rem; opacity: 0.8; margin-top: 10px;">URL: ${teacherVideo.currentSrc || 'не определен'}</p>
                             </div>
                         `;
                     }
                 };
 
-                // Proactive check for file existence (only on http/https)
-                if (window.location.protocol.startsWith('http')) {
-                    fetch(videoSource.src, { method: 'HEAD' })
-                        .then(response => {
-                            if (!response.ok) handleVideoError();
-                        })
-                        .catch(() => handleVideoError());
-                }
+                // Remove the proactive fetch check as it often fails on servers due to CORS or HEAD method restrictions
+                // Rely on native video events instead
 
                 // Listen for errors on the source element
                 if (videoSource) {
-                    videoSource.addEventListener('error', handleVideoError);
+                    videoSource.addEventListener('error', (e) => {
+                        console.warn("Source element reported error");
+                        handleVideoError(e);
+                    });
                 }
 
                 // Also listen on the video element itself
                 teacherVideo.addEventListener('error', handleVideoError);
 
-                // Check network state periodically
+                // Check network state periodically - increased delay for server environments
                 const checkInterval = setInterval(() => {
                     if (teacherVideo.networkState === 3) { // NETWORK_NO_SOURCE
-                        handleVideoError();
-                        clearInterval(checkInterval);
+                        console.warn("Network state: NO_SOURCE. Retrying...");
+                        teacherVideo.load(); // Try to reload
+                        
+                        // If still no source after another attempt
+                        setTimeout(() => {
+                            if (teacherVideo.networkState === 3) {
+                                handleVideoError({ type: 'network_no_source' });
+                                clearInterval(checkInterval);
+                            }
+                        }, 3000);
                     }
-                }, 2000);
+                }, 5000);
 
                 // When video is ready to play
                 teacherVideo.addEventListener('canplaythrough', function() {
