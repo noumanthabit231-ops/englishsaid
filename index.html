@@ -58,6 +58,17 @@
             padding: 0 24px;
         }
 
+        #mobile-toggle {
+            display: none;
+            background: none;
+            border: 1px solid var(--border);
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
         /* Decorative British/Academic Motifs */
         .academic-pattern {
             position: fixed;
@@ -623,12 +634,19 @@
         }
 
         /* Responsive */
+        .video-presentation-section {
+            margin-top: -4rem;
+            position: relative;
+            z-index: 5;
+        }
+
         @media (max-width: 992px) {
             .hero-title { font-size: 3.2rem; }
             .contact-wrapper { grid-template-columns: 1fr; padding: 3rem; }
         }
 
         @media (max-width: 768px) {
+            #mobile-toggle { display: block !important; }
             .nav-links { 
                 display: none; 
                 position: absolute;
@@ -637,32 +655,41 @@
                 width: 100%;
                 background: white;
                 flex-direction: column;
-                padding: 3rem;
+                padding: 2rem;
                 border-bottom: 1px solid var(--border);
+                box-shadow: 0 10px 20px rgba(0,0,0,0.1);
             }
             .nav-links.active { display: flex; }
-            .hero { padding: 8rem 0 4rem; }
-            .hero-title { font-size: 2.2rem; }
-            .hero-description { font-size: 1.1rem; padding: 0 10px; }
-            .hero-cta { display: flex; flex-direction: column; gap: 1rem; align-items: center; }
-            .hero-cta .btn { margin-left: 0 !important; width: 100%; max-width: 280px; }
+            .hero { padding: 7rem 0 3rem; }
+            .hero-title { font-size: 2.2rem; margin-bottom: 1.5rem; }
+            .hero-description { font-size: 1.1rem; padding: 0 10px; margin-bottom: 2.5rem; line-height: 1.5; }
+            .hero-cta { display: flex; flex-direction: column; gap: 1rem; align-items: center; width: 100%; }
+            .hero-cta .btn { margin: 0 !important; width: 100%; max-width: 300px; padding: 1.2rem; }
+            .video-presentation-section { margin-top: 2rem; padding: 0 1rem; }
+            .section { padding: 4rem 0; }
+            .section-header { margin-bottom: 2.5rem; }
             .section-title { font-size: 2.2rem; }
+            .features-grid { gap: 1.5rem; }
+            .contact-wrapper { padding: 2rem 1.5rem; gap: 2rem; }
             .video-overlay-end h3 { font-size: 1.8rem; }
             .price-value { font-size: 2.8rem; }
             .feature-card { padding: 2rem 1.5rem; }
             .pricing-card { padding: 3rem 1.5rem; }
-            .pricing-grid { grid-template-columns: 1fr; }
-            .pricing-card.featured { transform: none; }
+            .pricing-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .pricing-card.featured { transform: none; margin: 0; }
         }
 
         @media (max-width: 480px) {
             .hero-title { font-size: 1.8rem; line-height: 1.2; }
-            .hero-description { font-size: 1rem; margin-bottom: 2.5rem; }
-            .hero { padding: 7rem 0 3rem; }
-            .nav-brand h1 { font-size: 1.5rem; }
+            .hero-description { font-size: 1rem; margin-bottom: 2rem; }
+            .hero { padding: 6rem 0 2rem; }
+            .nav-brand h1 { font-size: 1.3rem; }
+            .nav-subtitle { font-size: 0.7rem; }
+            .video-presentation-section { margin-top: 1.5rem; }
             .section-title { font-size: 1.8rem; }
             .video-overlay-start h3 { font-size: 1.4rem; }
             .price-value { font-size: 2.2rem; }
+            .contact-wrapper { padding: 1.5rem 1rem; }
         }
 
         .success-message {
@@ -696,7 +723,7 @@
                         <span>WhatsApp</span>
                     </a>
                 </div>
-                <button class="btn btn-outline" style="padding: 0.5rem 1rem; display: none;" id="mobile-toggle">Menu</button>
+                <button class="btn btn-outline" id="mobile-toggle">Menu</button>
             </nav>
         </div>
     </header>
@@ -709,13 +736,13 @@
                 <p class="hero-description">Премиальное обучение английскому языку с глубоким погружением в культуру и практику. Индивидуальный подход для достижения ваших амбициозных целей.</p>
                 <div class="hero-cta">
                     <a href="#contact" class="btn btn-primary">Записаться на курс</a>
-                    <a href="https://wa.me/48789360341" class="btn btn-outline" style="margin-left: 1rem;">Консультация</a>
+                    <a href="https://wa.me/48789360341" class="btn btn-outline">Консультация</a>
                 </div>
             </div>
         </section>
 
         <!-- Video Presentation -->
-        <section class="container" style="margin-top: -4rem;">
+        <section class="container video-presentation-section">
             <div class="video-section">
                 <div class="video-container-inner">
                     <!-- Overlay for Start (Background playing, click to restart with sound) -->
