@@ -489,6 +489,40 @@
         }
 
         /* Pricing */
+        .currency-switcher {
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .currency-btn {
+            background: white;
+            border: 1px solid var(--border);
+            padding: 0.6rem 1.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 700;
+            color: var(--text-main);
+            transition: var(--transition);
+            font-size: 0.9rem;
+            min-width: 90px;
+            font-family: inherit;
+        }
+
+        .currency-btn.active {
+            background: var(--secondary);
+            color: white;
+            border-color: var(--secondary);
+            box-shadow: 0 4px 12px rgba(192, 86, 33, 0.2);
+        }
+
+        .currency-btn:hover:not(.active) {
+            border-color: var(--secondary);
+            color: var(--secondary);
+        }
+
         .pricing-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -859,11 +893,18 @@
                     <span class="section-label">Образовательные программы</span>
                     <h2 class="section-title">Выберите свой формат</h2>
                 </div>
+
+                <div class="currency-switcher">
+                    <button class="currency-btn active" data-currency="kzt">Тенге (₸)</button>
+                    <button class="currency-btn" data-currency="usd">Доллар ($)</button>
+                    <button class="currency-btn" data-currency="rub">Рубль (₽)</button>
+                </div>
+
                 <div class="pricing-grid">
                     <!-- Individual -->
                     <div class="pricing-card">
                         <h3 style="font-family: 'Playfair Display', serif; font-size: 1.8rem;">Individual</h3>
-                        <span class="price-value">10,000₸<span style="font-size: 1rem; color: var(--text-muted); font-weight: 500;"> / час</span></span>
+                        <span class="price-value" data-kzt="10,000₸" data-usd="21$" data-rub="1,600₽">10,000₸<span style="font-size: 1rem; color: var(--text-muted); font-weight: 500;"> / час</span></span>
                         <ul class="pricing-list">
                             <li>1-на-1 с преподавателем</li>
                             <li>Полная кастомизация программы</li>
@@ -877,7 +918,7 @@
                     <div class="pricing-card featured">
                         <div class="badge">Most Popular</div>
                         <h3 style="font-family: 'Playfair Display', serif; font-size: 1.8rem;">Small Group</h3>
-                        <span class="price-value">8,000₸<span style="font-size: 1rem; color: var(--text-muted); font-weight: 500;"> / час</span></span>
+                        <span class="price-value" data-kzt="8,000₸" data-usd="17$" data-rub="1,300₽">8,000₸<span style="font-size: 1rem; color: var(--text-muted); font-weight: 500;"> / час</span></span>
                         <ul class="pricing-list">
                             <li>Группы до 4 человек</li>
                             <li>Максимум разговорной практики</li>
@@ -1057,6 +1098,29 @@
                     });
                 }
             }
+
+            // Currency Switcher Logic
+            const currencyButtons = document.querySelectorAll('.currency-btn');
+            const priceValues = document.querySelectorAll('.price-value[data-kzt]');
+
+            currencyButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const currency = btn.getAttribute('data-currency');
+                    
+                    // Update active button
+                    currencyButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    // Update prices
+                    priceValues.forEach(price => {
+                        const newValue = price.getAttribute(`data-${currency}`);
+                        // Update only the first child node (the price text)
+                        if (price.childNodes.length > 0) {
+                            price.childNodes[0].textContent = newValue;
+                        }
+                    });
+                });
+            });
 
             // Mobile Menu Toggle
             if (mobileToggle) {
