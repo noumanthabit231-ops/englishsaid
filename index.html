@@ -471,9 +471,20 @@
         }
 
         .feature-icon {
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
-            display: block;
+            width: 48px;
+            height: 48px;
+            margin: 0 auto 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(26, 54, 93, 0.06);
+            border-radius: 12px;
+        }
+
+        .feature-icon svg {
+            width: 24px;
+            height: 24px;
+            fill: var(--primary);
         }
 
         .feature-card h3 {
@@ -756,6 +767,101 @@
             font-size: 0.8rem;
             letter-spacing: 1px;
         }
+
+        /* Testimonials */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border);
+            box-shadow: var(--shadow-premium);
+            position: relative;
+        }
+
+        .testimonial-card::before {
+            content: '\201C';
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            color: var(--accent);
+            position: absolute;
+            top: 0.5rem;
+            left: 1.5rem;
+            line-height: 1;
+            opacity: 0.3;
+        }
+
+        .testimonial-text {
+            font-size: 1.05rem;
+            line-height: 1.8;
+            color: var(--text-main);
+            padding-left: 1rem;
+            font-style: italic;
+        }
+
+        .testimonial-text .fix-typo {
+            color: var(--secondary);
+            font-weight: 600;
+            text-decoration: none;
+            border-bottom: 1px dashed var(--secondary);
+            cursor: help;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .testimonial-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .testimonial-name {
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .testimonial-source {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .testimonial-source span {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        @media (max-width: 768px) {
+            .testimonial-card {
+                padding: 1.8rem;
+            }
+            .testimonial-text {
+                font-size: 0.95rem;
+                padding-left: 0.5rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -863,24 +969,75 @@
                 </div>
                 <div class="features-grid">
                     <div class="feature-card">
-                        <span class="feature-icon">🏛️</span>
+                        <span class="feature-icon">
+                            <svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm0 10.99h7c-.53 4.12-3.28 7.79-7 8.94V12H5V6.3l7-3.11v8.8z"/></svg>
+                        </span>
                         <h3>Традиции качества</h3>
-                        <p>Мы используем проверенные временем кембриджские методики в сочетании с современными техниками.</p>
+                        <p>Мы используем проверенные временем оксфордские методики в сочетании с современными техниками.</p>
                     </div>
                     <div class="feature-card">
-                        <span class="feature-icon">🎯</span>
+                        <span class="feature-icon">
+                            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-2-3.5l6-4.5-6-4.5v9z"/></svg>
+                        </span>
                         <h3>Точный фокус</h3>
                         <p>Каждое занятие направлено на решение конкретной языковой задачи: от произношения до грамматики.</p>
                     </div>
                     <div class="feature-card">
-                        <span class="feature-icon">🌍</span>
+                        <span class="feature-icon">
+                            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
+                        </span>
                         <h3>Global Mindset</h3>
                         <p>Мы не просто учим словам, мы учим понимать культурный контекст и мыслить на языке.</p>
                     </div>
                     <div class="feature-card">
-                        <span class="feature-icon">💎</span>
+                        <span class="feature-icon">
+                            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </span>
                         <h3>Премиум сервис</h3>
                         <p>Персональный график, поддержка преподавателя и эксклюзивные учебные материалы.</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">
+                            <svg viewBox="0 0 24 24"><path d="M20 18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2H4c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2H0v2h24v-2h-4zM4 6h16v10H4V6z"/></svg>
+                        </span>
+                        <h3>Онлайн обучение</h3>
+                        <p>Учитесь из любой точки мира. Все занятия проходят в Zoom с интерактивной доской и современными цифровыми материалами.</p>
+                    </div>
+                    <div class="feature-card">
+                        <span class="feature-icon">
+                            <svg viewBox="0 0 24 24"><path d="M4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm16-4H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-1 9h-4v4h-2v-4H9V9h4V5h2v4h4v2z"/></svg>
+                        </span>
+                        <h3>Сертифицированные учителя</h3>
+                        <p>Преподаватели с международными сертификатами CELTA/TEFL и опытом работы от 5 лет. Каждый прошел строгий отбор.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="section" id="testimonials" style="background: #fdfbf7;">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-label">Отзывы учеников</span>
+                    <h2 class="section-title">Что говорят о нас</h2>
+                </div>
+                <div class="testimonials-grid">
+                    <div class="testimonial-card">
+                        <div class="testimonial-text">
+                            Хочу поблагодарить моего учителя Тимура, с ним мне очень легко и интересно обучаться, мы можем поговорить на разные темы, что дает возможность раскрыть потенциал языка и моей речи! Наш час проходит незаметно, и после у меня так много энергии, чтобы создавать и даже думать на английском. Я <span title="орфография: обожаю" class="fix-typo">обожаю</span> уроки с Тимуром! Всем рекомендую.
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="testimonial-avatar">У</div>
+                            <div>
+                                <div class="testimonial-name">Ученик Tenax Academy</div>
+                                <div class="testimonial-source">
+                                    <span>
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+                                        Отзыв из WhatsApp / Telegram
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -904,12 +1061,12 @@
                     <!-- Individual -->
                     <div class="pricing-card">
                         <h3 style="font-family: 'Playfair Display', serif; font-size: 1.8rem;">Individual</h3>
-                        <span class="price-value" data-kzt="10,000₸" data-usd="21$" data-rub="1,600₽">10,000₸<span style="font-size: 1rem; color: var(--text-muted); font-weight: 500;"> / час</span></span>
+                        <span class="price-value" data-kzt="5,000₸" data-usd="$10" data-rub="750₽">5,000₸<span style="font-size: 1rem; color: var(--text-muted); font-weight: 500;"> / час</span></span>
                         <ul class="pricing-list">
                             <li>1-на-1 с преподавателем</li>
                             <li>Полная кастомизация программы</li>
                             <li>Гибкий перенос занятий</li>
-                            <li>Подготовка к IELTS/TOEFL</li>
+                            <li>Любая цель: разговорный, IELTS/TOEFL, бизнес или общий курс</li>
                         </ul>
                         <a href="#contact" class="btn btn-outline" style="width: 100%;">Выбрать</a>
                     </div>
@@ -918,7 +1075,7 @@
                     <div class="pricing-card featured">
                         <div class="badge">Most Popular</div>
                         <h3 style="font-family: 'Playfair Display', serif; font-size: 1.8rem;">Small Group</h3>
-                        <span class="price-value" data-kzt="8,000₸" data-usd="17$" data-rub="1,300₽">8,000₸<span style="font-size: 1rem; color: var(--text-muted); font-weight: 500;"> / час</span></span>
+                        <span class="price-value" data-kzt="2,500₸" data-usd="$5" data-rub="380₽">2,500₸<span style="font-size: 1rem; color: var(--text-muted); font-weight: 500;"> / час</span></span>
                         <ul class="pricing-list">
                             <li>Группы до 4 человек</li>
                             <li>Максимум разговорной практики</li>
@@ -962,7 +1119,7 @@
                         <div class="contact-item">
                             <div class="contact-text">
                                 <strong>Email Support</strong>
-                                info@tenax-english.kz
+                                tenax.edu@gmail.com
                             </div>
                         </div>
                     </div>
@@ -1143,11 +1300,11 @@
                 const formData = new FormData(form);
                 const data = Object.fromEntries(formData);
                 
-                let message = '🎓 *Новая заявка: Tenax Academy*\n\n';
-                message += `👤 *Имя:* ${data.name}\n`;
-                message += `🎂 *Возраст:* ${data.age}\n`;
-                message += `📊 *Уровень:* ${data.level}\n`;
-                if (data.goals) message += `🎯 *Цели:* ${data.goals}\n`;
+                let message = '*Новая заявка: Tenax Academy*\n\n';
+                message += `*Имя:* ${data.name}\n`;
+                message += `*Возраст:* ${data.age}\n`;
+                message += `*Уровень:* ${data.level}\n`;
+                if (data.goals) message += `*Цели:* ${data.goals}\n`;
                 message += '\n_Отправлено из Tenax Academy_';
 
                 const encodedMessage = encodeURIComponent(message);
