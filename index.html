@@ -795,27 +795,27 @@
             border-radius: var(--radius-md);
             border: 1px solid var(--border);
             box-shadow: var(--shadow-premium);
-            position: relative;
+            display: flex;
+            flex-direction: column;
         }
 
-        .testimonial-card::before {
-            content: '\201C';
-            font-family: 'Playfair Display', serif;
-            font-size: 4rem;
-            color: var(--accent);
-            position: absolute;
-            top: 0.5rem;
-            left: 1.5rem;
-            line-height: 1;
-            opacity: 0.3;
+        .testimonial-stars {
+            display: flex;
+            gap: 3px;
+            margin-bottom: 1.2rem;
+        }
+
+        .testimonial-stars svg {
+            width: 18px;
+            height: 18px;
+            fill: #f6b83e;
         }
 
         .testimonial-text {
-            font-size: 1.05rem;
-            line-height: 1.8;
+            font-size: 1rem;
+            line-height: 1.7;
             color: var(--text-main);
-            padding-left: 1rem;
-            font-style: italic;
+            flex: 1;
         }
 
         .testimonial-text .fix-typo {
@@ -827,42 +827,21 @@
         }
 
         .testimonial-author {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-top: 2rem;
-            padding-top: 1.5rem;
+            margin-top: 1.8rem;
+            padding-top: 1.2rem;
             border-top: 1px solid var(--border);
-        }
-
-        .testimonial-avatar {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background: var(--primary);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 700;
-            font-size: 1.2rem;
-            flex-shrink: 0;
         }
 
         .testimonial-name {
             font-weight: 700;
             color: var(--primary);
+            font-size: 0.95rem;
         }
 
         .testimonial-source {
             font-size: 0.8rem;
             color: var(--text-muted);
-        }
-
-        .testimonial-source span {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.3rem;
+            margin-top: 0.2rem;
         }
 
         @media (max-width: 768px) {
@@ -871,7 +850,6 @@
             }
             .testimonial-text {
                 font-size: 0.95rem;
-                padding-left: 0.5rem;
             }
         }
     </style>
@@ -1035,37 +1013,49 @@
                 </div>
                 <div class="testimonials-grid">
                     <div class="testimonial-card">
+                        <div class="testimonial-stars">
+                            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </div>
                         <div class="testimonial-text">
                             Хочу поблагодарить моего учителя Тимура, с ним мне очень легко и интересно обучаться, мы можем поговорить на разные темы, что дает возможность раскрыть потенциал языка и моей речи! Наш час проходит незаметно, и после у меня так много энергии, чтобы создавать и даже думать на английском. Я <span title="орфография: обожаю" class="fix-typo">обожаю</span> уроки с Тимуром! Всем рекомендую.
                         </div>
                         <div class="testimonial-author">
-                            <div class="testimonial-avatar">У</div>
-                            <div>
-                                <div class="testimonial-name">Ученик Tenax Academy</div>
-                            </div>
+                            <div class="testimonial-name">Ученик Tenax Academy</div>
                         </div>
                     </div>
                     <div class="testimonial-card">
+                        <div class="testimonial-stars">
+                            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </div>
                         <div class="testimonial-text">
                             Очень удобно, я стала положительно относиться к дистанционному обучению. Столько времени и сил экономится.
                         </div>
                         <div class="testimonial-author">
-                            <div class="testimonial-avatar">У</div>
-                            <div>
-                                <div class="testimonial-name">Ученик Tenax Academy</div>
-                                <div class="testimonial-source">@tenax_edu</div>
-                            </div>
+                            <div class="testimonial-name">Ученик Tenax Academy</div>
+                            <div class="testimonial-source">@tenax_edu</div>
                         </div>
                     </div>
                     <div class="testimonial-card">
+                        <div class="testimonial-stars">
+                            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                            <svg viewBox="0 0 24 24"><path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"/></svg>
+                        </div>
                         <div class="testimonial-text">
                             Уже прошло два занятия и я очень довольна! Очень легко и без всяких заморочек.
                         </div>
                         <div class="testimonial-author">
-                            <div class="testimonial-avatar">У</div>
-                            <div>
-                                <div class="testimonial-name">Ученик Tenax Academy</div>
-                            </div>
+                            <div class="testimonial-name">Ученик Tenax Academy</div>
                         </div>
                     </div>
                 </div>
